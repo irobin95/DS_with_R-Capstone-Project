@@ -1,0 +1,42 @@
+get_weather_forecaset_by_cities <- function(city_names){
+    df <- data.frame()
+    for (city_name in city_names){
+        # Forecast API URL
+        forecast_url <- 'https://api.openweathermap.org/data/2.5/forecast'
+        # Create query parameters
+        forecast_query <- list(q = city_name, appid = "074363a18cb6832a7e89127dde8096a7", units="metric")
+        # Make HTTP GET call for the given city
+        response <- GET(forecast_url, forecast_query)
+        # Note that the 5-day forecast JSON result is a list of lists. You can print the reponse to check the results
+       http_type(response)
+       json_list <- content(response, as='parsed')
+        results <- json_list$list
+        
+        # Loop the json result
+        for(result in results) {
+            city <- c(city, city_name)
+            
+        # Add the R Lists into a data frame
+        weather <- c(weather, result$weather[[1]]$main)
+        visibility <- c(visibility, json_result$visibility)
+        temp <- c(temp, result$main$temp)
+        temp_min <- c(temp_min, result$main$temp_min)
+        temp_max <- c(temp_max, result$amain$temp_max)
+        pressure <- c(pressure, result$main$pressure)
+        humidity <- c(humidity, result$humidity)
+        wind_speed <- c(wind_speed, result$wind$speed)
+        wind_deg <- c(wind_deg, result$wind$deg)
+        forecast_datetime <- c(forecast_datetime, result$dt_txt)
+        library(zoo)
+        months <- as.numeric(format(as.Date(forecast_datetime), '%m'))
+        indx <- setNames( rep(c('winter', 'spring', 'summer',
+                   'fall'),each=3), c(12,1:11))
+        season <- unname(indx[as.character(months)])
+            }
+        #print(season)
+    }
+    
+    # Return a data frame
+    return(df)
+    
+}
