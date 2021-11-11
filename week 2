@@ -1,0 +1,7 @@
+# remove reference link
+remove_ref <- function(strings) {
+    ref_pattern <- "Define a pattern matching a reference link such as [1]"
+    # Replace all matched substrings with a white space using str_replace_all()
+    # Trim the reslt if you want
+    # return(result)
+}
